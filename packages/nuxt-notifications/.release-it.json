@@ -1,0 +1,22 @@
+{
+  "gitlab": {
+    "release": true,
+    "releaseName": "nuxt ${version}"
+  },
+  "git": {
+    "tagName": "nuxt@${version}",
+    "commitMessage": "nuxt@${version}",
+    "tagAnnotation": "nuxt@${version}",
+    "requireCleanWorkingDir": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md",
+      "ignoreRecommendedBump": true
+    }
+  }
+}

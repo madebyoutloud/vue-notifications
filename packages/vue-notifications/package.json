@@ -1,0 +1,48 @@
+{
+  "name": "@outloud/vue-notifications",
+  "description": "",
+  "private": false,
+  "version": "0.0.1",
+  "source": "src/index.ts",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vue-tsc --noEmit && vite build -w",
+    "build": "vue-tsc --noEmit && vite build",
+    "test": "vitest run",
+    "typecheck": "vue-tsc --noEmit",
+    "release": "pnpm build && release-it"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@vitejs/plugin-vue": "^4.3.1",
+    "@vueuse/core": "^10.3.0",
+    "release-it": "^15.6.0",
+    "sass": "^1.56.0",
+    "sass-loader": "^13.1.0",
+    "unplugin-vue-define-options": "^1.1.4",
+    "vite": "^4.4.9",
+    "vite-plugin-dts": "^3.5.2",
+    "vue": "^3.3.4",
+    "vue-tsc": "^1.8.8"
+  },
+  "peerDependencies": {
+    "@vueuse/core": ">= 9",
+    "vue": "^3"
+  }
+}
