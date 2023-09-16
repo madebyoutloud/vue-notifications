@@ -1,5 +1,12 @@
 
 
+## [1.0.2](https://git.outloud.dev/outloud/libraries/vue-notifications/compare/v1.0.1...v1.0.2) (2023-09-16)
+
+
+### Bug Fixes
+
+* border ([3fc5a27](https://git.outloud.dev/outloud/libraries/vue-notifications/commits/3fc5a273fe7dd84dff79d026c9eba0d30a84b33b))
+
 ## [1.0.1](https://git.outloud.dev/outloud/libraries/vue-notifications/compare/v1.0.0...v1.0.1) (2023-09-16)
 
 
