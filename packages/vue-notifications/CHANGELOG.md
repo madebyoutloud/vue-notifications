@@ -1,5 +1,12 @@
 
 
+## [1.0.1](https://git.outloud.dev/outloud/libraries/vue-notifications/compare/v1.0.0...v1.0.1) (2023-09-16)
+
+
+### Bug Fixes
+
+* styles ([a9609dd](https://git.outloud.dev/outloud/libraries/vue-notifications/commits/a9609ddbe6dda2823cce49170f14988a698005d0))
+
 # 1.0.0 (2023-09-03)
 
 
