@@ -63,7 +63,6 @@ const classNames = computed(() => [`variant--${props.variant}`, `type--${props.t
   align-items: flex-start;
   border: var(--o-border-width) solid var(--o-border-color);
   background-color: var(--o-color);
-  border-color: var(--border-color);
   color: var(--o-text-color);
   padding: var(--o-padding);
   gap: var(--o-gap);
