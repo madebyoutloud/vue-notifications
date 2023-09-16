@@ -61,7 +61,7 @@ const classNames = computed(() => [`variant--${props.variant}`, `type--${props.t
   --o-text-color: currentColor;
   display: flex;
   align-items: flex-start;
-  border: var(--o-border-width) solid (--o-border-color);
+  border: var(--o-border-width) solid var(--o-border-color);
   background-color: var(--o-color);
   border-color: var(--border-color);
   color: var(--o-text-color);
@@ -70,6 +70,8 @@ const classNames = computed(() => [`variant--${props.variant}`, `type--${props.t
 
   .o-notification-content {
     flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   .o-notification-close {
