@@ -1,3 +1,5 @@
+import type { Component } from 'vue'
+
 export type NotificationId = string | number
 
 export interface NotificationOptions {
@@ -8,6 +10,8 @@ export interface NotificationOptions {
   icon?: string
   closable?: boolean
   duration: number
+  component?: Component
+  props?: Record<string, any>
 }
 
 export class Notification {
@@ -18,6 +22,9 @@ export class Notification {
   readonly icon?: string
   readonly closable = false
   readonly duration: number
+  readonly component?: Component
+  readonly props?: Record<string, any>
+
   timestamp = Date.now()
 
   timer?: ReturnType<typeof setTimeout>
@@ -26,7 +33,7 @@ export class Notification {
     Object.assign(this, options)
   }
 
-  public get props() {
+  public toProps() {
     return {
       type: this.type,
       title: this.title,

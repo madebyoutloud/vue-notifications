@@ -3,9 +3,13 @@
     <Notification
       v-for="item in notifications.list"
       :key="item.id"
-      v-bind="item.props"
+      v-bind="item.toProps()"
       @close="notifications.close(item)"
-    />
+    >
+      <template v-if="item.component">
+        <component :is="item.component" v-bind="item.props" />
+      </template>
+    </Notification>
   </transition-group>
 </template>
 
