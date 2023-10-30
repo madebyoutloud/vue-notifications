@@ -1,5 +1,12 @@
 
 
+## [1.0.3](https://git.outloud.dev/outloud/libraries/vue-notifications/compare/v1.0.2...v1.0.3) (2023-10-30)
+
+
+### Features
+
+* add component option ([c26b525](https://git.outloud.dev/outloud/libraries/vue-notifications/commits/c26b52595ff12b353624fe62a1344103d73138a6))
+
 ## [1.0.2](https://git.outloud.dev/outloud/libraries/vue-notifications/compare/v1.0.1...v1.0.2) (2023-09-16)
 
 
