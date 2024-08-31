@@ -1,5 +1,5 @@
 import { addComponent, addImports, addPlugin, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
-import type { NotificationDefaults, NotificationsConfig } from '@outloud/vue-notifications'
+import { packageName, type NotificationDefaults, type NotificationsConfig } from '@outloud/vue-notifications'
 
 export default defineNuxtModule({
   meta: {
@@ -14,9 +14,9 @@ export default defineNuxtModule({
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
 
     // https://github.com/nuxt/framework/pull/8544
-    nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
-    nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
-    nuxt.options.vite.optimizeDeps.include.push('@outloud/vue-notifications')
+    // nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
+    // nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
+    // nuxt.options.vite.optimizeDeps.include.push('@outloud/vue-notifications')
 
     nuxt.hook('prepare:types', ({ references }) => {
       references.push({ types: '@outloud/vue-notifications' }, { types: '@outloud/nuxt-notifications' })
@@ -29,13 +29,9 @@ export default defineNuxtModule({
       },
     })
 
-    // Add runtime plugin before the router plugin
-    // https://github.com/nuxt/framework/issues/9130
-    nuxt.hook('modules:done', () => {
-      addPlugin(resolver.resolve('./runtime/plugin'))
-    })
+    addPlugin(resolver.resolve('./runtime/plugin'))
 
-    nuxt.options.css.unshift('@outloud/vue-notifications/style.css')
+    nuxt.options.css.push(`${packageName}/style.css`)
 
     addImports({
       name: 'useNotifications',

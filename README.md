@@ -1,1 +1,1 @@
-# @outloud/vue-notifications
+packages/vue-notifications/README.md

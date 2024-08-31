@@ -1,54 +1,82 @@
 <template>
   <div class="o-notification" :class="classNames">
-    <div v-if="icon" class="o-notification-icon">
-      <component :is="config.icon" :name="icon" />
-    </div>
-
-    <div class="o-notification-content">
-      <div>
-        <div v-if="title" class="o-notification-title">
-          {{ title }}
-        </div>
-        <div v-if="text" class="o-notification-text">
-          {{ text }}
-        </div>
+    <div class="o-notification-body">
+      <div v-if="activeIcon" class="o-notification-icon">
+        <component :is="notifications.options.icon" :name="activeIcon" />
       </div>
 
-      <slot />
+      <div class="o-notification-content">
+        <div>
+          <div v-if="notification.title" class="o-notification-title">
+            {{ notification.title }}
+          </div>
+          <div v-if="notification.text" class="o-notification-text">
+            {{ notification.text }}
+          </div>
+        </div>
+
+        <slot>
+          <template v-if="notification.component">
+            <component :is="notification.component" v-bind="notification.props" @close="close" />
+          </template>
+        </slot>
+      </div>
+
+      <slot name="actions"></slot>
+
+      <!-- <div class="o-notification-indicator" /> -->
+
+      <button v-if="notification.closable" type="button" class="o-notification-close" @click="close">
+        <component :is="notifications.options.icon" :name="notifications.options.closeIcon" />
+      </button>
     </div>
-
-    <slot name="actions" />
-
-    <!-- <div class="o-notification-indicator" /> -->
-
-    <button v-if="closable" type="button" class="o-notification-close" @click="emit('close')">
-      <component :is="config.icon" :name="config.closeIcon" />
-    </button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import config from '../config'
+import { useNotifications } from '../composables/notifications'
+import type { Notification } from '../notification'
 
-const props = withDefaults(defineProps<{
-  type?: string
-  icon?: string
-  title?: string
-  text?: string
-  variant?: string
-  closable?: boolean
-}>(), {
-  type: () => config.defaultType,
-  variant: 'default',
-  closable: true,
-})
+interface Props {
+  notification: Notification
+  stacked?: boolean
+  collapsed?: boolean
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   close: []
 }>()
 
-const classNames = computed(() => [`variant--${props.variant}`, `type--${props.type}`])
+defineSlots<{
+  default?(): any
+  actions?(): any
+}>()
+
+const notifications = useNotifications()
+
+const activeIcon = computed(() => {
+  return props.notification.loading ? notifications.options.loadingIcon : props.notification.icon
+})
+
+const classNames = computed(() => {
+  const list = [`type--${props.notification.type}`]
+
+  props.notification.loading && list.push('is--loading')
+
+  if (props.stacked) {
+    list.push('is--stacked')
+    props.collapsed && list.push('is--collapsed')
+  }
+
+  return list
+})
+
+function close() {
+  emit('close')
+}
 </script>
 
 <style lang="scss">
@@ -59,26 +87,79 @@ const classNames = computed(() => [`variant--${props.variant}`, `type--${props.t
   --o-border-width: 1px;
   --o-border-color: initial;
   --o-text-color: currentColor;
-  display: flex;
-  align-items: flex-start;
+  --o-size: #{rem(24)};
+  --o-icon-size: #{rem(20)};
+  --o-icon-color: var(--o-text-color);
+  --y: 0;
+  --s: 1;
+  position: relative;
+  width: 100%;
   border: var(--o-border-width) solid var(--o-border-color);
   background-color: var(--o-color);
   color: var(--o-text-color);
   padding: var(--o-padding);
-  gap: var(--o-gap);
+  margin-top: var(--o-spacing);
+
+  .o-notification-body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--o-gap);
+    transition: opacity .4s ease;
+  }
+
+  .o-notification-icon,
+  .o-notification-close {
+    flex: 0 0 auto;
+    width: var(--o-size);
+    height: var(--o-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .o-notification-icon {
+    color: var(--o-icon-color);
+    font-size: var(--o-icon-size);
+  }
 
   .o-notification-content {
+    align-self: center;
     flex: 1 1 auto;
     min-width: 0;
     overflow-wrap: break-word;
   }
 
   .o-notification-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: rem(28);
-    aspect-ratio: 1;
+    font-size: #{rem(20)};
+  }
+
+  &.is--stacked {
+    position: absolute;
+    transform: translate3d(0, var(--y), 0) scale(var(--s));
+    transition: transform .4s ease;
+    bottom: 0;
+  }
+
+  &.is--collapsed {
+    .o-notification-body {
+      opacity: 0;
+    }
+  }
+
+  &.v-move,
+  &.v-enter-active,
+  &.v-leave-active {
+    transition: opacity .4s ease, transform .4s ease;
+  }
+
+  &.v-enter-from,
+  &.v-leave-to {
+    opacity: 0;
+    transform: translate3d(50px, var(--y), 0) scale(var(--s));
+  }
+
+  &.v-leave-active {
+    position: absolute;
   }
 }
 </style>

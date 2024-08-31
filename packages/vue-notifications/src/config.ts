@@ -1,55 +1,36 @@
-export const NotificationTypes = ['info', 'success', 'warning', 'error'] as const
+import { NotificationType, type NotificationsPosition } from './types.js'
 
-export type NotificationType = typeof NotificationTypes[number]
-
-export type Position = 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
+export const config: NotificationsConfig = {
+  icon: 'Icon',
+  closeIcon: 'mdi:close',
+  loadingIcon: 'mdi:loading',
+  duration: 6000,
+  position: 'bottom-right',
+  limit: 0,
+  types: NotificationType,
+  defaultType: NotificationType[0],
+  transition: undefined,
+  stacked: false,
+}
 
 export interface NotificationsConfig {
   /** @default 'Icon' */
   icon: string
   /** @default 'material-symbols:close-rounded' */
   closeIcon: string
+  /** @default 'mdi:loading' */
+  loadingIcon: string
   /** @default 6000 */
   duration: number
   /** @default 'bottom-right' */
-  position: Position
-  /** @default 10 */
-  max: number
-  /** @default ['info', 'success', 'warning', 'error'] */
+  position: NotificationsPosition
+  /** @default 0 */
+  limit: number
+  /** @default ['default', 'info', 'success', 'warning', 'error'] */
   types: readonly string[]
-  /** @default 'info' */
+  /** @default 'default' */
   defaultType: string
-  /** @default 'o-notification' */
+  /** @default false */
+  stacked: boolean
   transition?: string
 }
-
-type ExtendedProperties<T> = { [P in keyof T]: T[P] }
-type ExtendedConfig<T> = Config<T> & ExtendedProperties<T>
-
-export class Config<T> {
-  constructor(data: T) {
-    Object.assign(this, data)
-  }
-
-  public set(options: Partial<T>) {
-    Object.assign(this, options)
-    return this
-  }
-}
-
-function createConfig<T>(data: T): ExtendedConfig<T> {
-  return new Config(data) as ExtendedConfig<T>
-}
-
-const globalConfig = createConfig<NotificationsConfig>({
-  icon: 'Icon',
-  closeIcon: 'material-symbols:close-rounded',
-  duration: 5000,
-  position: 'bottom-right',
-  max: 5,
-  types: NotificationTypes,
-  defaultType: NotificationTypes[0],
-  transition: 'o-notification',
-})
-
-export default globalConfig

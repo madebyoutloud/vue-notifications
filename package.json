@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"pnpm:dev:*\"",
     "dev:docs": "pnpm --filter docs dev",
@@ -11,15 +12,13 @@
     "release:library": "pnpm --filter @outloud/vue-notifications release",
     "lint": "eslint . --ext=.ts,.vue --fix",
     "typecheck": "pnpm --parallel typecheck",
-    "prepare:nuxt": "pnpm --filter @outloud/nuxt-notifications dev:prepare && pnpm --filter @outloud/nuxt-notifications prepack",
-    "postinstall": "pnpm build:library && pnpm prepare:nuxt"
+    "prepare:nuxt": "pnpm --filter @outloud/nuxt-notifications dev:prepare && pnpm --filter @outloud/nuxt-notifications prepack"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.34.1",
-    "@types/node": "^20.5.1",
-    "concurrently": "^7.6.0",
-    "eslint": "^8.32.0",
-    "prettier": "^3.0.2",
-    "typescript": "^5.1.6"
+    "@types/node": "^22.5.1",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.9.1",
+    "release-it": "^17.6.0",
+    "typescript": "^5.5.4"
   }
 }

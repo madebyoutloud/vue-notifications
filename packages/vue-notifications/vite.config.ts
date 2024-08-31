@@ -1,39 +1,41 @@
-import path from 'path'
+import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import DefineOptions from 'unplugin-vue-define-options/vite'
 import dts from 'vite-plugin-dts'
+import UnoCSS from 'unocss/vite'
 import packageJson from './package.json'
 
-const name = 'index'
+const name = 'VueNotifications'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'src'),
+      '~': path.resolve(import.meta.dirname, 'src'),
     },
   },
   plugins: [
     Vue(),
-    DefineOptions(),
+    UnoCSS(),
     dts({
-      tsconfigPath: 'tsconfig.dts.json',
+      tsconfigPath: path.resolve(import.meta.dirname, 'tsconfig.build.json'),
+      // rollupTypes: true,
     }),
   ],
   publicDir: false,
   build: {
-    lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
-      name,
-      fileName: format => `${name}.${format}.js`,
-    },
+    lib: mode === 'lib'
+      ? {
+          entry: ['src/index.ts'],
+          name,
+          formats: ['es'],
+        }
+      : undefined,
     rollupOptions: {
-      external: ['vue', '@vueuse/core'],
+      external: Object.keys(packageJson.peerDependencies),
       output: {
-        exports: 'auto',
+        exports: 'named',
         globals: {
-          'vue': 'Vue',
-          '@vueuse/core': 'VueUse',
+          vue: 'Vue',
         },
       },
     },
@@ -50,4 +52,9 @@ export default defineConfig({
     NAME: JSON.stringify(packageJson.name),
     VERSION: JSON.stringify(packageJson.version),
   },
-})
+
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+  },
+}))

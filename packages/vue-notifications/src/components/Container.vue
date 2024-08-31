@@ -1,38 +1,96 @@
 <template>
-  <transition-group class="o-notifications-container" :class="[`position--${config.position}`]" tag="div" :name="config.transition">
-    <Notification
-      v-for="item in notifications.list"
-      :key="item.id"
-      v-bind="item.toProps()"
-      @close="notifications.close(item)"
-    >
-      <template v-if="item.component">
-        <component :is="item.component" v-bind="item.props" />
-      </template>
-    </Notification>
-  </transition-group>
+  <div
+    ref="$el"
+    class="o-notifications-container"
+    :class="`position--${notifications.options.position}`"
+    @mouseenter="expand"
+    @mouseleave="collapse"
+  >
+    <div ref="$spacer" class="o-notifications-spacer"></div>
+
+    <transition-group :name="notifications.options.transition">
+      <Notification
+        v-for="(item, i) in notifications.list"
+        :key="item.id"
+        ref="$notifications"
+        :notification="item"
+        :stacked="notifications.options.stacked"
+        :collapsed="isCollapsed && i !== notifications.list.length - 1"
+        @close="notifications.close(item)"
+        @mouseenter="notifications.pause(item)"
+        @mouseleave="notifications.resume(item)"
+      />
+    </transition-group>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
 import { useNotifications } from '../composables/notifications'
-import config from '../config'
 import Notification from './Notification.vue'
 
 const notifications = useNotifications()
+const isCollapsed = ref(true)
+const $el = ref<HTMLElement>()
+const $spacer = ref<HTMLElement>()
+const $notifications = ref<ComponentPublicInstance<typeof Notification>[]>([])
+const collapsedSpacing = 12
+
+watch([notifications.list, isCollapsed], () => {
+  notifications.options.stacked && nextTick(updatePositions)
+})
+
+function updatePositions() {
+  if (!$el.value) {
+    return
+  }
+
+  const isTop = notifications.options.position.startsWith('top')
+  const direction = isTop ? 1 : -1
+  const spacing = $spacer.value?.offsetWidth || 0
+  let offset = 0
+
+  Array.from<HTMLElement>($notifications.value.map((item) => item.$el))
+    .reverse()
+    .forEach((el, i) => {
+      const { offsetHeight } = el
+
+      if (isTop) {
+        el.style.top = '0'
+      } else {
+        el.style.bottom = '0'
+      }
+
+      const y = (isCollapsed.value ? i * collapsedSpacing : offset) * direction
+      const scale = isCollapsed.value ? 1 - (i * 0.025) : 1
+
+      el.style.setProperty('--y', `${y}px`)
+      el.style.setProperty('--s', String(scale))
+
+      offset += offsetHeight + spacing
+    })
+
+  $el.value.style.height = isCollapsed.value ? 'auto' : `${offset}px`
+}
+
+function expand() {
+  isCollapsed.value = false
+}
+
+function collapse() {
+  isCollapsed.value = true
+}
 </script>
 
 <style lang="scss">
 .o-notifications-container {
+  --o-spacing: #{rem(8)};
   --o-offset: #{rem(16)};
-  --o-max-width: #{rem(480)};
-  --o-gap: #{rem(8)};
-  display: flex;
-  flex-direction: column;
+  --o-max-width: #{rem(420)};
   position: fixed;
   z-index: 2000;
   max-width: var(--o-max-width);
   width: calc(100% - var(--o-offset) * 2);
-  gap: var(--o-gap);
 
   &.position--bottom-right {
     bottom: var(--o-offset);
@@ -43,26 +101,17 @@ const notifications = useNotifications()
     left: var(--o-offset);
   }
   &.position--top-right {
-    top: var(--o-offset);
+    top: calc(var(--o-offset) - var(--o-spacing));
     right: var(--o-offset);
-    flex-direction: column-reverse;
   }
   &.position--top-left {
-    top: var(--o-offset);
+    top: calc(var(--o-offset) - var(--o-spacing));
     left: var(--o-offset);
-    flex-direction: column-reverse;
   }
-}
 
-.o-notification-move,
-.o-notification-enter-active,
-.o-notification-leave-active {
-  transition: all .5s ease;
-}
-
-.o-notification-enter-from,
-.o-notification-leave-to {
-  opacity: 0;
-  transform: translateX(-50px);
+  .o-notifications-spacer {
+    width: var(--o-spacing);
+    position: absolute;
+  }
 }
 </style>

@@ -1,19 +1,40 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "strictPropertyInitialization": false,
-    "baseUrl": ".",
-    "types": [
-      "vite/client"
-    ],
+    "rootDir": ".",
+
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "moduleDetection": "force",
+
+    "declaration": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "skipLibCheck": true,
+
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
     "paths": {
-      "~/*": ["src/*"]
-    }
+      "~/*": ["./src/*"]
+    },
+
+    "types": [
+      "vite/client",
+      "node"
+    ]
   },
-  "include": ["src"],
   "exclude": [
-    "dist",
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

@@ -1,8 +1,6 @@
-import type { ExtendedNotificationManager } from './NotificationManager'
-
-export * from './config'
-export * from './NotificationManager'
-export * from './Notification'
+export type { NotificationOptions } from './types'
+export { NotificationManager, type ExtendedNotificationManager } from './notification_manager'
+export { Notification } from './notification'
 
 // components
 export { default as ONotificationsContainer } from './components/Container.vue'
@@ -14,12 +12,6 @@ export * from './composables/notifications'
 // plugin
 export { createNotifications } from './plugin'
 
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    /**
-     * Notifications global state for the list and also provides
-     * functions that can be used to control it. {@link ExtendedNotificationManager}
-     */
-    $notifications: ExtendedNotificationManager
-  }
-}
+export const packageName = NAME
+export const components = ['Notification']
+export const composables = ['useNotifications']
