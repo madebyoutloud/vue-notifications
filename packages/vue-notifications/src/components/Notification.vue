@@ -35,8 +35,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useNotifications } from '../composables/notifications'
-import type { Notification } from '../notification'
+import { useNotifications } from '../composables/notifications.js'
+import type { Notification } from '../notification.js'
 
 interface Props {
   notification: Notification

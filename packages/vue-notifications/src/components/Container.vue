@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
-import { useNotifications } from '../composables/notifications'
+import { useNotifications } from '../composables/notifications.js'
 import Notification from './Notification.vue'
 
 const notifications = useNotifications()

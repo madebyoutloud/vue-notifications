@@ -1,14 +1,14 @@
 export type { NotificationOptions, NotificationDefaults, Notifications } from './types'
 export type { NotificationsConfig } from './config.js'
-export { NotificationManager, type ExtendedNotificationManager } from './notification_manager'
-export { Notification } from './notification'
+export { NotificationManager, type ExtendedNotificationManager } from './notification_manager.js'
+export { Notification } from './notification.js'
 
 // components
 export { default as ONotificationsContainer } from './components/Container.vue'
 export { default as ONotifications } from './components/Notification.vue'
 
 // composables
-export * from './composables/notifications'
+export * from './composables/notifications.js'
 
 // plugin
 export { createNotifications } from './plugin'

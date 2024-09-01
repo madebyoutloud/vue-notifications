@@ -18,8 +18,9 @@ build:docs:
     - pnpm config set store-dir .pnpm-store
     - apk add --no-cache zip git
   script:
-    - cd docs
     - pnpm i
+    - pnpm --filter @outloud/vue-notifications build
+    - cd docs
     - pnpm build
     - cd .vitepress/dist
     - zip -r $ARTIFACT_NAME ./*

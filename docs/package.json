@@ -16,6 +16,6 @@
     "vue": "^3.4.38"
   },
   "dependencies": {
-    "@outloud/vue-notifications": "workspace:^1"
+    "@outloud/vue-notifications": "workspace:^2"
   }
 }

@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.13.0",
-    "@outloud/vue-notifications": "^1"
+    "@outloud/vue-notifications": "^2"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.8.3",
