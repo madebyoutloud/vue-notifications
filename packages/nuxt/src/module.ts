@@ -1,12 +1,16 @@
 import { addComponent, addImports, addPlugin, addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
-import { packageName, type NotificationDefaults, type NotificationsConfig } from '@outloud/vue-notifications'
+import { packageName, components, composables } from '@outloud/vue-notifications'
+import type { ModuleOptions } from './types'
 
-export default defineNuxtModule({
+export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: '@outloud/nuxt-notifications',
     configKey: 'notifications',
+    compatibility: {
+      nuxt: '>=3.0.0',
+    },
   },
-  defaults: {} as Partial<NotificationsConfig & { defaults: Record<string, NotificationDefaults> }>,
+  defaults: {},
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
@@ -33,15 +37,15 @@ export default defineNuxtModule({
 
     nuxt.options.css.push(`${packageName}/style.css`)
 
-    addImports({
-      name: 'useNotifications',
-      from: '@outloud/vue-notifications',
-    })
+    addImports(composables.map(name => ({
+      name,
+      from: packageName,
+    })))
 
-    addComponent({
-      name: 'ONotification',
-      export: 'ONotification',
+    components.forEach(name => addComponent({
+      name: `O${name}`,
+      export: `O${name}`,
       filePath: '@outloud/vue-notifications',
-    })
+    }))
   },
 })

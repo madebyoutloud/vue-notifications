@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { mount, config } from '@vue/test-utils'
 import Notification from '~/components/Notification.vue'
+import { Notification as NotificationModel } from '~/notification.js'
 import { createNotifications } from '~/plugin.js'
 
 describe.concurrent('Notification.vue', () => {
@@ -13,9 +14,13 @@ describe.concurrent('Notification.vue', () => {
     const text = 'Text'
     const wrapper = mount(Notification, {
       props: {
-        type: 'info',
-        title,
-        text,
+        notification: new NotificationModel({
+          id: 1,
+          type: 'info',
+          title,
+          text,
+          duration: 0,
+        }),
       },
     })
 

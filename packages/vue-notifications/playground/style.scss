@@ -9,9 +9,27 @@ $types: (
     'border-color': '#CBCAFC',
     'icon-color': '#564AF7',
   ),
+  'info' : (
+    'color' : '#F6F5FF',
+    'border-color': '#CBCAFC',
+    'icon-color': '#564AF7',
+  ),
+  'success' : (
+    'color' : '#EAF6EB',
+    'border-color': '#C1E6C2',
+    'icon-color': '#0FB328',
+  ),
+  'warning' : (
+    'color' : '#FEF9EE',
+    'border-color': '#FBE8BD',
+    'icon-color': '#FFA900',
+  ),
+  'error' : (
+    'color' : '#FFF0F0',
+    'border-color': '#FFC2C2',
+    'icon-color': '#FF0000',
+  ),
 );
-
-
 
 .o-notification {
   border-radius: 10px;
@@ -40,6 +58,7 @@ $types: (
     background: none;
     opacity: 0.5;
     transition: opacity .3s;
+    color: #121827;
 
     &:hover {
       opacity: 1;

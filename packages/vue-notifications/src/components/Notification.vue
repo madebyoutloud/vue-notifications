@@ -88,7 +88,7 @@ function close() {
   --o-border-color: initial;
   --o-text-color: currentColor;
   --o-size: #{rem(24)};
-  --o-icon-size: #{rem(20)};
+  --o-icon-size: #{rem(24)};
   --o-icon-color: var(--o-text-color);
   --y: 0;
   --s: 1;
@@ -146,6 +146,12 @@ function close() {
     }
   }
 
+  &.is--loading {
+    .o-notification-icon {
+      animation: o-notifications-loading 1s linear infinite;
+    }
+  }
+
   &.v-move,
   &.v-enter-active,
   &.v-leave-active {
@@ -160,6 +166,12 @@ function close() {
 
   &.v-leave-active {
     position: absolute;
+  }
+
+  @keyframes o-notifications-loading {
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
 </style>

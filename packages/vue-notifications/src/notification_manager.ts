@@ -90,7 +90,7 @@ export class NotificationManager {
     return notification
   }
 
-  promise(promise: Promise<any>, { pending, success, error, ...options }: Partial<NotificationOptions> & Record<'pending' | 'success' | 'error', Partial<NotificationOptions>>) {
+  promise(promise: Promise<any>, { pending, success, error, ...options }: Partial<NotificationOptions & Record<'pending' | 'success' | 'error', Partial<NotificationOptions>>>) {
     const notification = this.open({
       ...options,
       ...pending,
@@ -101,7 +101,7 @@ export class NotificationManager {
       ...success,
       loading: false,
     })).catch((err) => this.update(notification, {
-      text: err.message,
+      ...(err ? { text: err.message } : {}),
       ...error,
       loading: false,
     }))

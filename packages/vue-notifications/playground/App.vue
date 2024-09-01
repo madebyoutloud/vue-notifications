@@ -36,6 +36,10 @@
       Open
     </button>
 
+    <button type="button" @click="promise">
+      Promise
+    </button>
+
     <ONotificationsContainer />
   </div>
 </template>
@@ -57,7 +61,21 @@ function open() {
     title: options.title ? 'My notification title' : undefined,
     text: options.text ? 'My notification message' : undefined,
     icon: options.icon ? 'mdi:account' : undefined,
+    loading: true,
+    duration: 0,
+  })
+}
+
+function promise() {
+  notifications.promise(new Promise((resolve) => {
+    setTimeout(resolve, 2000)
+  }), {
+    text: 'My notification message',
     // duration: 0,
+    success: {
+      text: 'Success',
+      icon: 'mdi:check',
+    },
   })
 }
 </script>

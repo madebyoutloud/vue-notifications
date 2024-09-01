@@ -1,36 +1,38 @@
 {
   "name": "@outloud/vue-notifications",
-  "description": "",
+  "title": "Vue Notifications",
+  "description": "A library for displaying notification/toast in Vue 3.",
   "private": false,
   "version": "1.0.3",
   "type": "module",
-  "source": "src/index.ts",
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
+      "import": "./dist/style.css"
     }
   },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "imports": {
     "~/*": "./src/*.js"
   },
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://git.outloud.dev/outloud/libraries/vue-notifications"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build --mode lib",
     "test": "vitest run",
     "test:dev": "vitest",
     "typecheck": "vue-tsc --noEmit",
+    "prepack": "pnpm build",
     "release": "pnpm build && release-it"
   },
   "devDependencies": {

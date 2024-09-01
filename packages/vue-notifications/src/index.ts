@@ -1,4 +1,5 @@
-export type { NotificationOptions } from './types'
+export type { NotificationOptions, NotificationDefaults, Notifications } from './types'
+export type { NotificationsConfig } from './config.js'
 export { NotificationManager, type ExtendedNotificationManager } from './notification_manager'
 export { Notification } from './notification'
 

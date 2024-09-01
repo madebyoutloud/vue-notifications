@@ -1,10 +1,14 @@
+node_modules
+
+dist
+dist-ssr
+cache
+
 .DS_Store
 .vite-ssg-dist
 .vite-ssg-temp
 *.local
-dist
-dist-ssr
-node_modules
+
 .idea/
 .vscode
 *.log

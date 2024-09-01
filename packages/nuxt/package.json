@@ -2,29 +2,36 @@
   "name": "@outloud/nuxt-notifications",
   "private": false,
   "version": "1.0.0",
-  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "require": "./dist/module.cjs",
+      "types": "./dist/types.d.ts"
     }
   },
   "main": "./dist/module.cjs",
+  "module": "./dist/module.mjs",
   "types": "./dist/types.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build",
+    "build": "nuxt-module-build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-    "release": "pnpm prepack && release-it"
+    "prepack": "pnpm build",
+    "release": "pnpm build && release-it"
   },
   "dependencies": {
+    "@nuxt/kit": "^3.13.0",
     "@outloud/vue-notifications": "^1"
   },
   "devDependencies": {
+    "@nuxt/module-builder": "^0.8.3",
+    "@nuxt/schema": "^3.13.0",
+    "@outloud/eslint-config-nuxt": "^1.1.2",
+    "nuxt": "^3.13.0"
   }
 }

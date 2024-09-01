@@ -11,8 +11,7 @@
     "test:library": "pnpm --filter @outloud/vue-notifications test",
     "release:library": "pnpm --filter @outloud/vue-notifications release",
     "lint": "eslint . --ext=.ts,.vue --fix",
-    "typecheck": "pnpm --parallel typecheck",
-    "prepare:nuxt": "pnpm --filter @outloud/nuxt-notifications dev:prepare && pnpm --filter @outloud/nuxt-notifications prepack"
+    "typecheck": "pnpm --parallel typecheck"
   },
   "devDependencies": {
     "@types/node": "^22.5.1",
