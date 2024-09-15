@@ -12,7 +12,6 @@
       <Notification
         v-for="(item, i) in notifications.list"
         :key="item.id"
-        ref="$notifications"
         :notification="item"
         :stacked="notifications.options.stacked"
         :collapsed="isCollapsed && i !== notifications.list.length - 1"
@@ -25,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { useNotifications } from '../composables/notifications.js'
 import Notification from './Notification.vue'
 
@@ -33,7 +32,6 @@ const notifications = useNotifications()
 const isCollapsed = ref(true)
 const $el = ref<HTMLElement>()
 const $spacer = ref<HTMLElement>()
-const $notifications = ref<ComponentPublicInstance<typeof Notification>[]>([])
 const collapsedSpacing = 12
 
 watch([notifications.list, isCollapsed], () => {
@@ -50,7 +48,10 @@ function updatePositions() {
   const spacing = $spacer.value?.offsetWidth || 0
   let offset = 0
 
-  Array.from<HTMLElement>($notifications.value.map((item) => item.$el))
+  Array.from<HTMLElement>($el.value.children as any)
+    .filter((el) => {
+      return el.classList.contains('o-notification') && !el.classList.contains('v-leave-active')
+    })
     .reverse()
     .forEach((el, i) => {
       const { offsetHeight } = el
