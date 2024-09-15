@@ -18,12 +18,12 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolver.resolve('./runtime'))
 
     // https://github.com/nuxt/framework/pull/8544
-    // nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
-    // nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
-    // nuxt.options.vite.optimizeDeps.include.push('@outloud/vue-notifications')
+    nuxt.options.vite.optimizeDeps = nuxt.options.vite.optimizeDeps || {}
+    nuxt.options.vite.optimizeDeps.include = nuxt.options.vite.optimizeDeps.include || []
+    nuxt.options.vite.optimizeDeps.include.push(packageName)
 
     nuxt.hook('prepare:types', ({ references }) => {
-      references.push({ types: '@outloud/vue-notifications' }, { types: '@outloud/nuxt-notifications' })
+      references.push({ types: packageName }, { types: '@outloud/nuxt-notifications' })
     })
 
     addTemplate({
@@ -45,7 +45,7 @@ export default defineNuxtModule<ModuleOptions>({
     components.forEach(name => addComponent({
       name: `O${name}`,
       export: `O${name}`,
-      filePath: '@outloud/vue-notifications',
+      filePath: packageName,
     }))
   },
 })
