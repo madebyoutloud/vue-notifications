@@ -50,7 +50,7 @@ The best place is to add it to your `app.vue` file or layout in layouts folder.
 </template>
 
 <script setup lang="ts">
-import { ONotificationsContainer } from '@outloud/vue-modals' // [!code highlight]
+import { ONotificationsContainer } from '@outloud/vue-notifications' // [!code highlight]
 </script>
 ```
 :::
