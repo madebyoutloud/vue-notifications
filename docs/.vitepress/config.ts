@@ -17,18 +17,18 @@ const meta = [
     property: 'og:type',
     content: 'website',
   },
-  // {
-  //   property: 'og:image',
-  //   content: webUrl + '/images/social.png',
-  // },
+  {
+    property: 'og:image',
+    content: webUrl + '/images/social.png',
+  },
   {
     property: 'twitter:card',
     content: 'summary_large_image',
   },
-  // {
-  //   property: 'twitter:image',
-  //   content: webUrl + '/images/social.png',
-  // },
+  {
+    property: 'twitter:image',
+    content: webUrl + '/images/social.png',
+  },
 ]
 
 // https://vitepress.dev/reference/site-config

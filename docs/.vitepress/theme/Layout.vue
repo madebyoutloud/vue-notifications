@@ -1,12 +1,12 @@
 <template>
   <DefaultTheme.Layout>
     <template #home-hero-image>
-      <!-- <VPImage
-        :image="{ light: '/images/hero-light@2x.png', dark: '/images/hero@2x.png' }"
+      <VPImage
+        :image="{ light: '/images/hero@2x.png', dark: '/images/hero@2x.png' }"
         alt="hero"
-        width="866"
-        height="566"
-      /> -->
+        width="1183"
+        height="695"
+      />
     </template>
   </DefaultTheme.Layout>
 
